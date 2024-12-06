@@ -1,0 +1,96 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract HackathonManager {
+    struct Hackathon {
+        uint256 id;
+        string name;
+        string description;
+        string date;
+        uint256 applicationCount;
+        uint256 maxApplications;
+        address[] applicants;
+    }
+
+    mapping(uint256 => Hackathon) public hackathons;
+    mapping(address => mapping(uint256 => bool)) public hasApplied;
+    uint256 public hackathonCount;
+
+    // Add hackathon details
+    function addHackathon(
+        string memory _name,
+        string memory _description,
+        string memory _date
+    ) public {
+        hackathonCount++;
+        Hackathon storage newHackathon = hackathons[hackathonCount];
+        newHackathon.id = hackathonCount;
+        newHackathon.name = _name;
+        newHackathon.description = _description;
+        newHackathon.date = _date;
+        newHackathon.maxApplications = 10; // Default limit
+    }
+
+    // Retrieve all hackathon details
+    function getAllHackathons() public view returns (Hackathon[] memory) {
+        Hackathon[] memory allHackathons = new Hackathon[](hackathonCount);
+        for (uint256 i = 1; i <= hackathonCount; i++) {
+            allHackathons[i - 1] = hackathons[i];
+        }
+        return allHackathons;
+    }
+
+    // Apply for a hackathon
+    function applyForHackathon(uint256 _hackathonId) public {
+        require(_hackathonId > 0 && _hackathonId <= hackathonCount, "Invalid hackathon ID");
+        Hackathon storage hackathon = hackathons[_hackathonId];
+        require(hackathon.applicationCount < hackathon.maxApplications, "Application limit reached");
+        require(!hasApplied[msg.sender][_hackathonId], "Already applied");
+
+        hackathon.applicants.push(msg.sender);
+        hackathon.applicationCount++;
+        hasApplied[msg.sender][_hackathonId] = true;
+    }
+
+    // View applied and unapplied hackathons
+    function viewHackathons() public view returns (Hackathon[] memory applied, Hackathon[] memory unapplied) {
+        uint256 appliedCount;
+        uint256 unappliedCount;
+
+        // Count applied and unapplied hackathons
+        for (uint256 i = 1; i <= hackathonCount; i++) {
+            if (hasApplied[msg.sender][i]) {
+                appliedCount++;
+            } else {
+                unappliedCount++;
+            }
+        }
+
+        applied = new Hackathon[](appliedCount);
+        unapplied = new Hackathon[](unappliedCount);
+        uint256 appliedIndex = 0;
+        uint256 unappliedIndex = 0;
+
+        // Populate applied and unapplied arrays
+        for (uint256 i = 1; i <= hackathonCount; i++) {
+            if (hasApplied[msg.sender][i]) {
+                applied[appliedIndex++] = hackathons[i];
+            } else {
+                unapplied[unappliedIndex++] = hackathons[i];
+            }
+        }
+    }
+
+    // Set application limit for a hackathon
+    function setApplicationLimit(uint256 _hackathonId, uint256 _limit) public {
+        require(_hackathonId > 0 && _hackathonId <= hackathonCount, "Invalid hackathon ID");
+        Hackathon storage hackathon = hackathons[_hackathonId];
+        hackathon.maxApplications = _limit;
+    }
+
+    // List the number of applicants for each hackathon
+    function getNumberOfApplicants(uint256 _hackathonId) public view returns (uint256) {
+        require(_hackathonId > 0 && _hackathonId <= hackathonCount, "Invalid hackathon ID");
+        return hackathons[_hackathonId].applicationCount;
+    }
+}
