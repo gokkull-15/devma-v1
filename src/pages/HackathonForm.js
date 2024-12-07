@@ -40,14 +40,7 @@ const HackathonForm = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block mb-2">Hackathon Name:</label>
-          <input
-            type="text"
-            name="hackathonName"
-            value={formData.hackathonName}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
+          
         </div>
         <div className="mb-4">
           <label className="block mb-2">Tagline:</label>
