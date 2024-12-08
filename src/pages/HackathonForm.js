@@ -3,16 +3,9 @@ import { storeHackathonData } from "../integration"; // Import the function to s
 
 const HackathonForm = () => {
   const [formData, setFormData] = useState({
-    hackathonName: "",
-    tagline: "",
+    name: "",
     description: "",
-    website: "",
-    email: "",
-    twitter: "",
-    linkedin: "",
-    discord: "",
-    telegram: "",
-    instagram: "",
+    date: "",
   });
 
   const handleChange = (e) => {
@@ -42,19 +35,8 @@ const HackathonForm = () => {
           <label className="block mb-2">Hackathon Name:</label>
           <input
             type="text"
-            name="hackathonName"
-            value={formData.hackathonName}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Tagline:</label>
-          <input
-            type="text"
-            name="tagline"
-            value={formData.tagline}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded"
             required
@@ -71,77 +53,11 @@ const HackathonForm = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block mb-2">Website:</label>
+          <label className="block mb-2">Date:</label>
           <input
-            type="url"
-            name="website"
-            value={formData.website}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Twitter:</label>
-          <input
-            type="url"
-            name="twitter"
-            value={formData.twitter}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">LinkedIn:</label>
-          <input
-            type="url"
-            name="linkedin"
-            value={formData.linkedin}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Discord:</label>
-          <input
-            type="url"
-            name="discord"
-            value={formData.discord}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Telegram:</label>
-          <input
-            type="url"
-            name="telegram"
-            value={formData.telegram}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Instagram:</label>
-          <input
-            type="url"
-            name="instagram"
-            value={formData.instagram}
+            type="date"
+            name="date"
+            value={formData.date}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded"
             required
