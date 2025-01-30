@@ -6,7 +6,6 @@ import Login from "./pages/Login";
 import HackathonForm from "./pages/HackathonForm";
 
 
-
 function App() {
   return (
     <Router>
